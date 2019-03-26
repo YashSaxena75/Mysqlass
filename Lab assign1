@@ -1,0 +1,387 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.0.11 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| abc                |
+| akshat             |
+| anish              |
+| dementor           |
+| information_schema |
+| jmkv               |
+| kartikey           |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| tushar             |
+| world              |
+| yash               |
++--------------------+
+14 rows in set (0.16 sec)
+
+mysql> create database Yash;
+ERROR 1007 (HY000): Can't create database 'yash'; database exists
+mysql> create database Yashs;
+Query OK, 1 row affected (0.36 sec)
+
+mysql> use Yashs
+Database changed
+mysql> create table college(cname varchar(20),state varchar(20),en int);
+Query OK, 0 rows affected (0.57 sec)
+
+mysql> create table Student(sid int,sname varchar(20),GPA int,DOB Date);
+Query OK, 0 rows affected (0.47 sec)
+
+mysql> create table Apply(sid int,cname varchar(20),major varchar(20),decision varchar(20));
+Query OK, 0 rows affected (0.38 sec)
+
+mysql> insert into Student(00,yash,2.1,'1999-09-08');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '00,yash,2.1,'1999-09-08')' at line 1
+mysql> insert into Student(00,'yash',2.1,'1999-09-08');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '00,'yash',2.1,'1999-09-08')' at line 1
+mysql> insert into Student values (00,'yash',2.1,'1999-09-08');
+Query OK, 1 row affected (0.19 sec)
+
+mysql> select * from Student;
++------+-------+------+------------+
+| sid  | sname | GPA  | DOB        |
++------+-------+------+------------+
+|    0 | yash  |    2 | 1999-09-08 |
++------+-------+------+------------+
+1 row in set (0.00 sec)
+
+mysql> drop table Student;
+Query OK, 0 rows affected (0.46 sec)
+
+mysql> create table Student (sid int,sname varchar(20),GPA numeric(2,1),sizeHS int,DOB Date);
+Query OK, 0 rows affected (0.28 sec)
+
+mysql> show tables;
++-----------------+
+| Tables_in_yashs |
++-----------------+
+| apply           |
+| college         |
+| student         |
++-----------------+
+3 rows in set (0.02 sec)
+
+mysql> desc college;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| cname | varchar(20) | YES  |     | NULL    |       |
+| state | varchar(20) | YES  |     | NULL    |       |
+| en    | int(11)     | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc Student;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| sid    | int(11)      | YES  |     | NULL    |       |
+| sname  | varchar(20)  | YES  |     | NULL    |       |
+| GPA    | decimal(2,1) | YES  |     | NULL    |       |
+| sizeHS | int(11)      | YES  |     | NULL    |       |
+| DOB    | date         | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> desc apply;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| sid      | int(11)     | YES  |     | NULL    |       |
+| cname    | varchar(20) | YES  |     | NULL    |       |
+| major    | varchar(20) | YES  |     | NULL    |       |
+| decision | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into Student values (123,'Amy',3.9,1000,'1996-05-26');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into Student values (234,'Bob',3.6,1500,'1995-04-07');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> update Student
+    -> set DOB='1996-06-26'
+    -> where sid=123;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> insert into Student values (145,'Craig',3.5,500,'1995-02-04');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> update Student
+    -> set sid=345
+    -> where sname='craig';
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> insert into Student values (456,'Doris',3.9,1000,'1997-07-24');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into Student values (567,'Edward',2.9,2000,'1996-12-21');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into Student values (678,'Fay',3.8,200,'1996-08-27');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into Student values (789,'Gray',3.4,800,'1996-10-08');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into Student values (987,'Helen',3.7,800,'1997-03-27');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> update Student
+    -> set sname='Gary'
+    -> where sid=789;
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> insert into Student values (876,'Irene',3.9,400,'1996-03-07');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into Student values (785,'Jay',2.9,1500,'1998-08-08');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into Student values (654,'Amy',3.9,1000,'1996-05-26');
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert into Student values (543,'Craig',3.4,2000,'1998-08-26');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> select * from Student;
++------+--------+------+--------+------------+
+| sid  | sname  | GPA  | sizeHS | DOB        |
++------+--------+------+--------+------------+
+|  123 | Amy    |  3.9 |   1000 | 1996-06-26 |
+|  234 | Bob    |  3.6 |   1500 | 1995-04-07 |
+|  345 | Craig  |  3.5 |    500 | 1995-02-04 |
+|  456 | Doris  |  3.9 |   1000 | 1997-07-24 |
+|  567 | Edward |  2.9 |   2000 | 1996-12-21 |
+|  678 | Fay    |  3.8 |    200 | 1996-08-27 |
+|  789 | Gary   |  3.4 |    800 | 1996-10-08 |
+|  987 | Helen  |  3.7 |    800 | 1997-03-27 |
+|  876 | Irene  |  3.9 |    400 | 1996-03-07 |
+|  785 | Jay    |  2.9 |   1500 | 1998-08-08 |
+|  654 | Amy    |  3.9 |   1000 | 1996-05-26 |
+|  543 | Craig  |  3.4 |   2000 | 1998-08-26 |
++------+--------+------+--------+------------+
+12 rows in set (0.00 sec)
+
+mysql> desc apply;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| sid      | int(11)     | YES  |     | NULL    |       |
+| cname    | varchar(20) | YES  |     | NULL    |       |
+| major    | varchar(20) | YES  |     | NULL    |       |
+| decision | varchar(20) | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into apply(123,'Stanford','CS','Y');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '123,'Stanford','CS','Y')' at line 1
+mysql> insert into apply values (123,'Stanford','CS','Y');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into apply values (123,'Stanford','EE','N');
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert into apply values (123,'Berkeley','CS','Y');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into apply values (123,'Cornell','EE','Y');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into apply values (234,'Berkeley','Biology','N');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into apply values (345,'MIT','Bioengineering','Y');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into apply values (345,'Cornell','Bioengineering','N');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into apply values (345,'Cornell','','N');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> update apply
+    -> set major='CS'
+    -> \c
+mysql> select * from apply;
++------+----------+----------------+----------+
+| sid  | cname    | major          | decision |
++------+----------+----------------+----------+
+|  123 | Stanford | CS             | Y        |
+|  123 | Stanford | EE             | N        |
+|  123 | Berkeley | CS             | Y        |
+|  123 | Cornell  | EE             | Y        |
+|  234 | Berkeley | Biology        | N        |
+|  345 | MIT      | Bioengineering | Y        |
+|  345 | Cornell  | Bioengineering | N        |
+|  345 | Cornell  |                | N        |
++------+----------+----------------+----------+
+8 rows in set (0.00 sec)
+
+mysql> alter table apply
+    -> delete column cname where cname='Cornell';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delete column cname where cname='Cornell'' at line 2
+mysql> delete from apply where cname='Cornell';
+Query OK, 3 rows affected (0.10 sec)
+
+mysql> select * from apply;
++------+----------+----------------+----------+
+| sid  | cname    | major          | decision |
++------+----------+----------------+----------+
+|  123 | Stanford | CS             | Y        |
+|  123 | Stanford | EE             | N        |
+|  123 | Berkeley | CS             | Y        |
+|  234 | Berkeley | Biology        | N        |
+|  345 | MIT      | Bioengineering | Y        |
++------+----------+----------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into apply values (123,'Cornell','EE','Y');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into apply values (345,'Cornell','Bioengineering','N');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into apply values (345,'Cornell','CS','Y');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> select * from apply;
++------+----------+----------------+----------+
+| sid  | cname    | major          | decision |
++------+----------+----------------+----------+
+|  123 | Stanford | CS             | Y        |
+|  123 | Stanford | EE             | N        |
+|  123 | Berkeley | CS             | Y        |
+|  234 | Berkeley | Biology        | N        |
+|  345 | MIT      | Bioengineering | Y        |
+|  123 | Cornell  | EE             | Y        |
+|  345 | Cornell  | Bioengineering | N        |
+|  345 | Cornell  | CS             | Y        |
++------+----------+----------------+----------+
+8 rows in set (0.00 sec)
+
+mysql> insert into apply values (345,'Cornell','EE','N');
+Query OK, 1 row affected (0.15 sec)
+
+mysql> select * from apply;
++------+----------+----------------+----------+
+| sid  | cname    | major          | decision |
++------+----------+----------------+----------+
+|  123 | Stanford | CS             | Y        |
+|  123 | Stanford | EE             | N        |
+|  123 | Berkeley | CS             | Y        |
+|  234 | Berkeley | Biology        | N        |
+|  345 | MIT      | Bioengineering | Y        |
+|  123 | Cornell  | EE             | Y        |
+|  345 | Cornell  | Bioengineering | N        |
+|  345 | Cornell  | CS             | Y        |
+|  345 | Cornell  | EE             | N        |
++------+----------+----------------+----------+
+9 rows in set (0.00 sec)
+
+mysql> insert into apply values (678,'Stanford','History','Y');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> insert into apply values (987,'Stanford','CS','Y');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into apply values (987,'Berkeley','CS','Y');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into apply values (876,'Stanford','CS','N');
+Query OK, 1 row affected (0.19 sec)
+
+mysql> insert into apply values (876,'MIT','Biology','Y');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into apply values (876,'MIT','Marine Biogoly','N');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into apply values (765,'Stanford','History','Y');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into apply values (765,'Cornell','History','N');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into apply values (765,'Cornell','Psychology','Y');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into apply values (543,'MIT','CS','N');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into college values ('Stanord','CA',15000);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into college values ('Berkeley','CA',36000);
+Query OK, 1 row affected (0.18 sec)
+
+mysql> insert into college values ('MIT','MA',10000);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into college values ('Cornell','NY',21000);
+Query OK, 1 row affected (0.16 sec)
+
+mysql> insert into college values ('Harvard','MA',50040);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> select * from apply;
++------+----------+----------------+----------+
+| sid  | cname    | major          | decision |
++------+----------+----------------+----------+
+|  123 | Stanford | CS             | Y        |
+|  123 | Stanford | EE             | N        |
+|  123 | Berkeley | CS             | Y        |
+|  234 | Berkeley | Biology        | N        |
+|  345 | MIT      | Bioengineering | Y        |
+|  123 | Cornell  | EE             | Y        |
+|  345 | Cornell  | Bioengineering | N        |
+|  345 | Cornell  | CS             | Y        |
+|  345 | Cornell  | EE             | N        |
+|  678 | Stanford | History        | Y        |
+|  987 | Stanford | CS             | Y        |
+|  987 | Berkeley | CS             | Y        |
+|  876 | Stanford | CS             | N        |
+|  876 | MIT      | Biology        | Y        |
+|  876 | MIT      | Marine Biogoly | N        |
+|  765 | Stanford | History        | Y        |
+|  765 | Cornell  | History        | N        |
+|  765 | Cornell  | Psychology     | Y        |
+|  543 | MIT      | CS             | N        |
++------+----------+----------------+----------+
+19 rows in set (0.01 sec)
+
+mysql> select * from college;
++----------+-------+-------+
+| cname    | state | en    |
++----------+-------+-------+
+| Stanord  | CA    | 15000 |
+| Berkeley | CA    | 36000 |
+| MIT      | MA    | 10000 |
+| Cornell  | NY    | 21000 |
+| Harvard  | MA    | 50040 |
++----------+-------+-------+
+5 rows in set (0.00 sec)
+
+mysql>
