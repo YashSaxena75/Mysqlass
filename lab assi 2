@@ -1,0 +1,243 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.1.33-community MySQL Community Server (GPL)
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql> sho database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'sho database' at line 1
+mysql> show database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'database' at line 1
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| anish              |
+| divyam             |
+| mysql              |
+| rashi              |
+| test               |
+| yash               |
++--------------------+
+7 rows in set (0.00 sec)
+
+mysql> use yash;
+Database changed
+mysql> create table College;
+ERROR 1113 (42000): A table must have at least 1 column
+mysql> create table College(cName varchar(10),state varchar(10),enrollment int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table Student (sID: int, sName varchar(10), GPA decimal(2,1), sizeHS int);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ': int, sName varchar(10), GPA decimal(2,1), sizeHS int)' at line 1
+mysql> create table Student (sID int, sName varchar(10), GPA decimal(2,1), sizeHS int);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> create table Apply (sID int, cName varchar(10), major varchar(20));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> alter table Student add primary key (cName);
+ERROR 1072 (42000): Key column 'cName' doesn't exist in table
+mysql> alter table College add primary key (cName);
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table Student add primary key (sID);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table Apply add primary key (sID,cName,major);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>     FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FOREIGN KEY (PersonID) REFERENCES Persons(PersonID)' at line 1
+mysql> FOREIGN KEY (sID) REFERENCES student(cName);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FOREIGN KEY (sID) REFERENCES student(cName)' at line 1
+mysql> alter table applyy add FOREIGN KEY (sID) REFERENCES student(cName);
+ERROR 1146 (42S02): Table 'yash.applyy' doesn't exist
+mysql> alter table apply add FOREIGN KEY (sID) REFERENCES student(cName);
+ERROR 1005 (HY000): Can't create table 'yash.#sql-2b3c_3' (errno: 150)
+mysql> alter table apply add FOREIGN KEY (sID) REFERENCES student (sID);
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table apply add FOREIGN KEY (sID) REFERENCES college ( cName );
+ERROR 1005 (HY000): Can't create table 'yash.#sql-2b3c_3' (errno: 150)
+mysql> alter table apply add FOREIGN KEY (cName) REFERENCES college ( cName );
+Query OK, 0 rows affected (1.28 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table apply alter column major varchar(25);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar(25)' at line 1
+mysql> alter table apply modify column major varchar(25);
+Query OK, 0 rows affected (0.89 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table apply add decision varchar(3) not null;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc applu;
+ERROR 1146 (42S02): Table 'yash.applu' doesn't exist
+mysql> desc apply;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| sID      | int(11)     | NO   | PRI | 0       |       |
+| cName    | varchar(10) | NO   | PRI |         |       |
+| major    | varchar(25) | NO   | PRI |         |       |
+| decision | varchar(3)  | NO   |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.02 sec)
+
+mysql> alter table apply modify decision char(1);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc apply;
++----------+-------------+------+-----+---------+-------+
+| Field    | Type        | Null | Key | Default | Extra |
++----------+-------------+------+-----+---------+-------+
+| sID      | int(11)     | NO   | PRI | 0       |       |
+| cName    | varchar(10) | NO   | PRI |         |       |
+| major    | varchar(25) | NO   | PRI |         |       |
+| decision | char(1)     | YES  |     | NULL    |       |
++----------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table apply drop foreign key cName;
+ERROR 1025 (HY000): Error on rename of '.\yash\apply' to '.\yash\#sql2-2b3c-3' (errno: 152)
+mysql> alter table apply drop constraint cName;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'constraint cName' at line 1
+mysql> alter table apply drop foreign key;
+ERROR 1005 (HY000): Can't create table 'yash.#sql-2b3c_3' (errno: 150)
+mysql> alter table apply drop FOREIGN KEY;
+ERROR 1005 (HY000): Can't create table 'yash.#sql-2b3c_3' (errno: 150)
+mysql> alter table apply drop constraint cName references college (cName);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'constraint cName references college (cName)' at line 1
+mysql> alter table apply drop cName;
+ERROR 1025 (HY000): Error on rename of '.\yash\#sql-2b3c_3' to '.\yash\apply' (errno: 150)
+mysql> alter table apply drop column cName;
+ERROR 1025 (HY000): Error on rename of '.\yash\#sql-2b3c_3' to '.\yash\apply' (errno: 150)
+mysql> alter table apply drop collumn cName;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cName' at line 1
+mysql> alter table apply drop cName;
+ERROR 1025 (HY000): Error on rename of '.\yash\#sql-2b3c_3' to '.\yash\apply' (errno: 150)
+mysql> select * from apply;
+Empty set (0.00 sec)
+
+mysql> alter table apply drop column cName;
+ERROR 1025 (HY000): Error on rename of '.\yash\#sql-2b3c_3' to '.\yash\apply' (errno: 150)
+mysql> alter table apply drop foreign key(cName);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(cName)' at line 1
+mysql> alter table apply drop foreign key cName;
+ERROR 1025 (HY000): Error on rename of '.\yash\apply' to '.\yash\#sql2-2b3c-3' (errno: 152)
+mysql> alter table apply drop foreign key;
+ERROR 1005 (HY000): Can't create table 'yash.#sql-2b3c_3' (errno: 150)
+mysql> alter table apply drop foreign key 'cName';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''cName'' at line 1
+mysql> alter table apply drop foreign key cName;
+ERROR 1025 (HY000): Error on rename of '.\yash\apply' to '.\yash\#sql2-2b3c-3' (errno: 152)
+mysql> alter table student drop column sizeHS;
+Query OK, 0 rows affected (0.16 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc Student;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| sID   | int(11)      | NO   | PRI | 0       |       |
+| sName | varchar(10)  | YES  |     | NULL    |       |
+| GPA   | decimal(2,1) | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table apply drop foreign key cName;
+ERROR 1025 (HY000): Error on rename of '.\yash\apply' to '.\yash\#sql2-2b3c-3' (errno: 152)
+mysql> alter table apply drop foreign key;
+ERROR 1005 (HY000): Can't create table 'yash.#sql-2b3c_3' (errno: 150)
+mysql> alter table college drop primary key;
+ERROR 1025 (HY000): Error on rename of '.\yash\#sql-2b3c_3' to '.\yash\college' (errno: 150)
+mysql> desc college;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| cName      | varchar(10) | NO   | PRI |         |       |
+| state      | varchar(10) | YES  |     | NULL    |       |
+| enrollment | int(11)     | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+3 rows in set (0.09 sec)
+
+mysql> alter table college drop primary key cName;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cName' at line 1
+mysql> alter table college drop primary key(cName);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(cName)' at line 1
+mysql> alter table college drop column (cName);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(cName)' at line 1
+mysql> alter table college drop column cName;
+ERROR 1025 (HY000): Error on rename of '.\yash\#sql-2b3c_3' to '.\yash\college' (errno: 150)
+mysql> show create_table apply;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create_table apply' at line 1
+mysql> show create table apply;
++-------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table | Create Table                                                                                                                                                                                                                                                                                                                                                                                                                                                |
++-------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| apply | CREATE TABLE `apply` (
+  `sID` int(11) NOT NULL DEFAULT '0',
+  `cName` varchar(10) NOT NULL DEFAULT '',
+  `major` varchar(25) NOT NULL DEFAULT '',
+  `decision` char(1) DEFAULT NULL,
+  PRIMARY KEY (`sID`,`cName`,`major`),
+  KEY `cName` (`cName`),
+  CONSTRAINT `apply_ibfk_1` FOREIGN KEY (`sID`) REFERENCES `student` (`sID`),
+  CONSTRAINT `apply_ibfk_2` FOREIGN KEY (`cName`) REFERENCES `college` (`cName`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 |
++-------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table apply drop foreign key apply_ibfk_1;
+Query OK, 0 rows affected (0.25 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> show create_table college;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'create_table college' at line 1
+mysql> show create table college;
++---------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table   | Create Table                                                                                                                                                                                                |
++---------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| college | CREATE TABLE `college` (
+  `cName` varchar(10) NOT NULL DEFAULT '',
+  `state` varchar(10) DEFAULT NULL,
+  `enrollment` int(11) DEFAULT NULL,
+  PRIMARY KEY (`cName`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 |
++---------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table college drop primary key (`cName`);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(`cName`)' at line 1
+mysql> alter table college drop primary key `cName`;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`cName`' at line 1
+mysql> alter table college drop primary key cName;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cName' at line 1
+mysql> alter table college drop primary key cName;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'cName' at line 1
+mysql> alter table college change enrollment enroll int;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc college;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cName  | varchar(10) | NO   | PRI |         |       |
+| state  | varchar(10) | YES  |     | NULL    |       |
+| enroll | int(11)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql>
