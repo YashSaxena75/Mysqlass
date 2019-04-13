@@ -1,0 +1,1105 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 2
+Server version: 5.1.33-community MySQL Community Server (GPL)
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql> use yash
+Database changed
+mysql> select * from student;
++------+--------+------+--------+------------+
+| sID  | sName  | GPA  | sizeHS | DoB        |
++------+--------+------+--------+------------+
+|  123 | Amy    |  3.9 |   1000 | 1996-06-26 |
+|  234 | Bob    |  3.6 |   1500 | 1995-04-07 |
+|  345 | Craig  |  3.5 |    500 | 1995-02-04 |
+|  456 | Doris  |  3.9 |   1000 | 1997-07-24 |
+|  567 | Edward |  2.9 |   2000 | 1996-12-21 |
+|  678 | Fay    |  3.8 |    200 | 1996-08-27 |
+|  789 | Gary   |  3.4 |    800 | 1996-10-08 |
+|  987 | Helen  |  3.7 |    800 | 1997-03-27 |
+|  876 | Irene  |  3.9 |    400 | 1996-03-07 |
+|  765 | Jay    |  2.9 |   1500 | 1998-08-08 |
+|  654 | Amy    |  3.9 |   1000 | 1996-05-26 |
+|  543 | Craig  |  3.4 |   2000 | 1998-08-27 |
++------+--------+------+--------+------------+
+12 rows in set (0.03 sec)
+
+mysql> select sName,GPA from Student join apply where Student.sID=apply.sID;
++-------+------+
+| sName | GPA  |
++-------+------+
+| Amy   |  3.9 |
+| Amy   |  3.9 |
+| Amy   |  3.9 |
+| Amy   |  3.9 |
+| Bob   |  3.6 |
+| Craig |  3.5 |
+| Craig |  3.5 |
+| Craig |  3.5 |
+| Craig |  3.5 |
+| Fay   |  3.8 |
+| Helen |  3.7 |
+| Helen |  3.7 |
+| Irene |  3.9 |
+| Irene |  3.9 |
+| Irene |  3.9 |
+| Jay   |  2.9 |
+| Jay   |  2.9 |
+| Jay   |  2.9 |
+| Craig |  3.4 |
++-------+------+
+19 rows in set (0.01 sec)
+
+mysql> select sName,GPA,sizeHS from Student join apply where Student.sID=apply.sID;
++-------+------+--------+
+| sName | GPA  | sizeHS |
++-------+------+--------+
+| Amy   |  3.9 |   1000 |
+| Amy   |  3.9 |   1000 |
+| Amy   |  3.9 |   1000 |
+| Amy   |  3.9 |   1000 |
+| Bob   |  3.6 |   1500 |
+| Craig |  3.5 |    500 |
+| Craig |  3.5 |    500 |
+| Craig |  3.5 |    500 |
+| Craig |  3.5 |    500 |
+| Fay   |  3.8 |    200 |
+| Helen |  3.7 |    800 |
+| Helen |  3.7 |    800 |
+| Irene |  3.9 |    400 |
+| Irene |  3.9 |    400 |
+| Irene |  3.9 |    400 |
+| Jay   |  2.9 |   1500 |
+| Jay   |  2.9 |   1500 |
+| Jay   |  2.9 |   1500 |
+| Craig |  3.4 |   2000 |
++-------+------+--------+
+19 rows in set (0.00 sec)
+
+mysql> select sID.Student,sName.Student,GPA from Student;
+ERROR 1054 (42S22): Unknown column 'sID.Student' in 'field list'
+mysql> select Student.sID,Student.sName,GPA from Student;
++------+--------+------+
+| sID  | sName  | GPA  |
++------+--------+------+
+|  123 | Amy    |  3.9 |
+|  234 | Bob    |  3.6 |
+|  345 | Craig  |  3.5 |
+|  456 | Doris  |  3.9 |
+|  567 | Edward |  2.9 |
+|  678 | Fay    |  3.8 |
+|  789 | Gary   |  3.4 |
+|  987 | Helen  |  3.7 |
+|  876 | Irene  |  3.9 |
+|  765 | Jay    |  2.9 |
+|  654 | Amy    |  3.9 |
+|  543 | Craig  |  3.4 |
++------+--------+------+
+12 rows in set (0.00 sec)
+
+mysql> select Student.sID,Student.sName,GPA,Apply.cName from Student,apply join apply where Student.sID=apply.sID ;
+ERROR 1066 (42000): Not unique table/alias: 'apply'
+mysql> select Student.sID,Student.sName,GPA,apply.cName from Student,apply join apply where Student.sID=apply.sID ;
+ERROR 1066 (42000): Not unique table/alias: 'apply'
+mysql> select Student.sID,Student.sName,GPA,apply.cName from Student join apply where Student.sID=apply.sID ;
++------+-------+------+----------+
+| sID  | sName | GPA  | cName    |
++------+-------+------+----------+
+|  123 | Amy   |  3.9 | Berkeley |
+|  123 | Amy   |  3.9 | Cornell  |
+|  123 | Amy   |  3.9 | Stanford |
+|  123 | Amy   |  3.9 | Stanford |
+|  234 | Bob   |  3.6 | Berkeley |
+|  345 | Craig |  3.5 | Cornell  |
+|  345 | Craig |  3.5 | Cornell  |
+|  345 | Craig |  3.5 | Cornell  |
+|  345 | Craig |  3.5 | MIT      |
+|  678 | Fay   |  3.8 | Stanford |
+|  987 | Helen |  3.7 | Berkeley |
+|  987 | Helen |  3.7 | Stanford |
+|  876 | Irene |  3.9 | MIT      |
+|  876 | Irene |  3.9 | MIT      |
+|  876 | Irene |  3.9 | Stanford |
+|  765 | Jay   |  2.9 | Cornell  |
+|  765 | Jay   |  2.9 | Cornell  |
+|  765 | Jay   |  2.9 | Stanford |
+|  543 | Craig |  3.4 | MIT      |
++------+-------+------+----------+
+19 rows in set (0.00 sec)
+
+mysql> select Student.sID,Student.sName,GPA from Student join college where college.state='CA';
++------+--------+------+
+| sID  | sName  | GPA  |
++------+--------+------+
+|  123 | Amy    |  3.9 |
+|  123 | Amy    |  3.9 |
+|  234 | Bob    |  3.6 |
+|  234 | Bob    |  3.6 |
+|  345 | Craig  |  3.5 |
+|  345 | Craig  |  3.5 |
+|  456 | Doris  |  3.9 |
+|  456 | Doris  |  3.9 |
+|  567 | Edward |  2.9 |
+|  567 | Edward |  2.9 |
+|  678 | Fay    |  3.8 |
+|  678 | Fay    |  3.8 |
+|  789 | Gary   |  3.4 |
+|  789 | Gary   |  3.4 |
+|  987 | Helen  |  3.7 |
+|  987 | Helen  |  3.7 |
+|  876 | Irene  |  3.9 |
+|  876 | Irene  |  3.9 |
+|  765 | Jay    |  2.9 |
+|  765 | Jay    |  2.9 |
+|  654 | Amy    |  3.9 |
+|  654 | Amy    |  3.9 |
+|  543 | Craig  |  3.4 |
+|  543 | Craig  |  3.4 |
++------+--------+------+
+24 rows in set (0.03 sec)
+
+mysql> select college.state Student.sID,Student.sName,GPA from Student join college where college.state='CA';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.sID,Student.sName,GPA from Student join college where college.state='CA'' at line 1
+mysql> select college.state,Student.sID,Student.sName,GPA from Student join college where college.state='CA';
++-------+------+--------+------+
+| state | sID  | sName  | GPA  |
++-------+------+--------+------+
+| CA    |  123 | Amy    |  3.9 |
+| CA    |  123 | Amy    |  3.9 |
+| CA    |  234 | Bob    |  3.6 |
+| CA    |  234 | Bob    |  3.6 |
+| CA    |  345 | Craig  |  3.5 |
+| CA    |  345 | Craig  |  3.5 |
+| CA    |  456 | Doris  |  3.9 |
+| CA    |  456 | Doris  |  3.9 |
+| CA    |  567 | Edward |  2.9 |
+| CA    |  567 | Edward |  2.9 |
+| CA    |  678 | Fay    |  3.8 |
+| CA    |  678 | Fay    |  3.8 |
+| CA    |  789 | Gary   |  3.4 |
+| CA    |  789 | Gary   |  3.4 |
+| CA    |  987 | Helen  |  3.7 |
+| CA    |  987 | Helen  |  3.7 |
+| CA    |  876 | Irene  |  3.9 |
+| CA    |  876 | Irene  |  3.9 |
+| CA    |  765 | Jay    |  2.9 |
+| CA    |  765 | Jay    |  2.9 |
+| CA    |  654 | Amy    |  3.9 |
+| CA    |  654 | Amy    |  3.9 |
+| CA    |  543 | Craig  |  3.4 |
+| CA    |  543 | Craig  |  3.4 |
++-------+------+--------+------+
+24 rows in set (0.00 sec)
+
+mysql> select Student.sID,Student.sName,GPA,apply.cName where GPA>3.7 and cName='Stanford';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where GPA>3.7 and cName='Stanford'' at line 1
+mysql> desc Student;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| sID    | int(11)      | YES  |     | NULL    |       |
+| sName  | varchar(10)  | YES  |     | NULL    |       |
+| GPA    | decimal(2,1) | YES  |     | NULL    |       |
+| sizeHS | int(11)      | YES  |     | NULL    |       |
+| DoB    | date         | YES  |     | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+5 rows in set (0.02 sec)
+
+mysql> select Student.sID,Student.sName,GPA,apply.cName from Student,applywhere GPA>3.7 and cName='Stanford';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '>3.7 and cName='Stanford'' at line 1
+mysql> select Student.sID,Student.sName,GPA,apply.cName from Student,apply where GPA>3.7 and cName='Stanford';
++------+-------+------+----------+
+| sID  | sName | GPA  | cName    |
++------+-------+------+----------+
+|  123 | Amy   |  3.9 | Stanford |
+|  123 | Amy   |  3.9 | Stanford |
+|  123 | Amy   |  3.9 | Stanford |
+|  123 | Amy   |  3.9 | Stanford |
+|  123 | Amy   |  3.9 | Stanford |
+|  123 | Amy   |  3.9 | Stanford |
+|  456 | Doris |  3.9 | Stanford |
+|  456 | Doris |  3.9 | Stanford |
+|  456 | Doris |  3.9 | Stanford |
+|  456 | Doris |  3.9 | Stanford |
+|  456 | Doris |  3.9 | Stanford |
+|  456 | Doris |  3.9 | Stanford |
+|  678 | Fay   |  3.8 | Stanford |
+|  678 | Fay   |  3.8 | Stanford |
+|  678 | Fay   |  3.8 | Stanford |
+|  678 | Fay   |  3.8 | Stanford |
+|  678 | Fay   |  3.8 | Stanford |
+|  678 | Fay   |  3.8 | Stanford |
+|  876 | Irene |  3.9 | Stanford |
+|  876 | Irene |  3.9 | Stanford |
+|  876 | Irene |  3.9 | Stanford |
+|  876 | Irene |  3.9 | Stanford |
+|  876 | Irene |  3.9 | Stanford |
+|  876 | Irene |  3.9 | Stanford |
+|  654 | Amy   |  3.9 | Stanford |
+|  654 | Amy   |  3.9 | Stanford |
+|  654 | Amy   |  3.9 | Stanford |
+|  654 | Amy   |  3.9 | Stanford |
+|  654 | Amy   |  3.9 | Stanford |
+|  654 | Amy   |  3.9 | Stanford |
++------+-------+------+----------+
+30 rows in set (0.28 sec)
+
+mysql> select Student.sID,Student.sName,GPA,apply.cName from Student,apply where Student.GPA>3.7 and apply.cName='Stanford';
++------+-------+------+----------+
+| sID  | sName | GPA  | cName    |
++------+-------+------+----------+
+|  123 | Amy   |  3.9 | Stanford |
+|  123 | Amy   |  3.9 | Stanford |
+|  123 | Amy   |  3.9 | Stanford |
+|  123 | Amy   |  3.9 | Stanford |
+|  123 | Amy   |  3.9 | Stanford |
+|  123 | Amy   |  3.9 | Stanford |
+|  456 | Doris |  3.9 | Stanford |
+|  456 | Doris |  3.9 | Stanford |
+|  456 | Doris |  3.9 | Stanford |
+|  456 | Doris |  3.9 | Stanford |
+|  456 | Doris |  3.9 | Stanford |
+|  456 | Doris |  3.9 | Stanford |
+|  678 | Fay   |  3.8 | Stanford |
+|  678 | Fay   |  3.8 | Stanford |
+|  678 | Fay   |  3.8 | Stanford |
+|  678 | Fay   |  3.8 | Stanford |
+|  678 | Fay   |  3.8 | Stanford |
+|  678 | Fay   |  3.8 | Stanford |
+|  876 | Irene |  3.9 | Stanford |
+|  876 | Irene |  3.9 | Stanford |
+|  876 | Irene |  3.9 | Stanford |
+|  876 | Irene |  3.9 | Stanford |
+|  876 | Irene |  3.9 | Stanford |
+|  876 | Irene |  3.9 | Stanford |
+|  654 | Amy   |  3.9 | Stanford |
+|  654 | Amy   |  3.9 | Stanford |
+|  654 | Amy   |  3.9 | Stanford |
+|  654 | Amy   |  3.9 | Stanford |
+|  654 | Amy   |  3.9 | Stanford |
+|  654 | Amy   |  3.9 | Stanford |
++------+-------+------+----------+
+30 rows in set (0.00 sec)
+
+mysql> select distinct(Student.sID),Student.sName,GPA,apply.cName from Student,apply where Student.GPA>3.7 and apply.cName='Stanford';
++------+-------+------+----------+
+| sID  | sName | GPA  | cName    |
++------+-------+------+----------+
+|  123 | Amy   |  3.9 | Stanford |
+|  456 | Doris |  3.9 | Stanford |
+|  678 | Fay   |  3.8 | Stanford |
+|  876 | Irene |  3.9 | Stanford |
+|  654 | Amy   |  3.9 | Stanford |
++------+-------+------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct(Student.sID),Student.sName,apply.major,apply.decision from Student,apply where Student.sID=apply.sID;
++------+-------+----------------+----------+
+| sID  | sName | major          | decision |
++------+-------+----------------+----------+
+|  123 | Amy   | CS             | Y        |
+|  123 | Amy   | EE             | Y        |
+|  123 | Amy   | EE             | N        |
+|  234 | Bob   | biology        | N        |
+|  345 | Craig | bioengineering | N        |
+|  345 | Craig | CS             | Y        |
+|  345 | Craig | EE             | N        |
+|  345 | Craig | bioengineering | Y        |
+|  678 | Fay   | history        | Y        |
+|  987 | Helen | CS             | Y        |
+|  876 | Irene | biology        | Y        |
+|  876 | Irene | marine biology | N        |
+|  876 | Irene | CS             | N        |
+|  765 | Jay   | history        | N        |
+|  765 | Jay   | psychology     | Y        |
+|  765 | Jay   | history        | Y        |
+|  543 | Craig | CS             | N        |
++------+-------+----------------+----------+
+17 rows in set (0.00 sec)
+
+mysql> select distinct(Student.sID),Student.sName,apply.major,apply.decision from Student,apply where Student.sID=apply.sID and apply.decision='N';
++------+-------+----------------+----------+
+| sID  | sName | major          | decision |
++------+-------+----------------+----------+
+|  123 | Amy   | EE             | N        |
+|  234 | Bob   | biology        | N        |
+|  345 | Craig | bioengineering | N        |
+|  345 | Craig | EE             | N        |
+|  876 | Irene | marine biology | N        |
+|  876 | Irene | CS             | N        |
+|  765 | Jay   | history        | N        |
+|  543 | Craig | CS             | N        |
++------+-------+----------------+----------+
+8 rows in set (0.00 sec)
+
+mysql> select distinct(Student.sID),Student.sName,apply.major,apply.decision from Student,apply where Student.sID=apply.sID and apply.decision='N' and major='CS';
++------+-------+-------+----------+
+| sID  | sName | major | decision |
++------+-------+-------+----------+
+|  876 | Irene | CS    | N        |
+|  543 | Craig | CS    | N        |
++------+-------+-------+----------+
+2 rows in set (0.00 sec)
+
+mysql> select distinct(Student.sID) ,Student.sName,apply.major,college.state from Student,college where college.state='NY';
+ERROR 1054 (42S22): Unknown column 'apply.major' in 'field list'
+mysql> select distinct(Student.sID) ,Student.sName,apply.major,college.state from Student,college,apply where college.state='NY';
++------+--------+----------------+-------+
+| sID  | sName  | major          | state |
++------+--------+----------------+-------+
+|  123 | Amy    | CS             | NY    |
+|  234 | Bob    | CS             | NY    |
+|  345 | Craig  | CS             | NY    |
+|  456 | Doris  | CS             | NY    |
+|  567 | Edward | CS             | NY    |
+|  678 | Fay    | CS             | NY    |
+|  789 | Gary   | CS             | NY    |
+|  987 | Helen  | CS             | NY    |
+|  876 | Irene  | CS             | NY    |
+|  765 | Jay    | CS             | NY    |
+|  654 | Amy    | CS             | NY    |
+|  543 | Craig  | CS             | NY    |
+|  123 | Amy    | EE             | NY    |
+|  234 | Bob    | EE             | NY    |
+|  345 | Craig  | EE             | NY    |
+|  456 | Doris  | EE             | NY    |
+|  567 | Edward | EE             | NY    |
+|  678 | Fay    | EE             | NY    |
+|  789 | Gary   | EE             | NY    |
+|  987 | Helen  | EE             | NY    |
+|  876 | Irene  | EE             | NY    |
+|  765 | Jay    | EE             | NY    |
+|  654 | Amy    | EE             | NY    |
+|  543 | Craig  | EE             | NY    |
+|  123 | Amy    | biology        | NY    |
+|  234 | Bob    | biology        | NY    |
+|  345 | Craig  | biology        | NY    |
+|  456 | Doris  | biology        | NY    |
+|  567 | Edward | biology        | NY    |
+|  678 | Fay    | biology        | NY    |
+|  789 | Gary   | biology        | NY    |
+|  987 | Helen  | biology        | NY    |
+|  876 | Irene  | biology        | NY    |
+|  765 | Jay    | biology        | NY    |
+|  654 | Amy    | biology        | NY    |
+|  543 | Craig  | biology        | NY    |
+|  123 | Amy    | bioengineering | NY    |
+|  234 | Bob    | bioengineering | NY    |
+|  345 | Craig  | bioengineering | NY    |
+|  456 | Doris  | bioengineering | NY    |
+|  567 | Edward | bioengineering | NY    |
+|  678 | Fay    | bioengineering | NY    |
+|  789 | Gary   | bioengineering | NY    |
+|  987 | Helen  | bioengineering | NY    |
+|  876 | Irene  | bioengineering | NY    |
+|  765 | Jay    | bioengineering | NY    |
+|  654 | Amy    | bioengineering | NY    |
+|  543 | Craig  | bioengineering | NY    |
+|  123 | Amy    | history        | NY    |
+|  234 | Bob    | history        | NY    |
+|  345 | Craig  | history        | NY    |
+|  456 | Doris  | history        | NY    |
+|  567 | Edward | history        | NY    |
+|  678 | Fay    | history        | NY    |
+|  789 | Gary   | history        | NY    |
+|  987 | Helen  | history        | NY    |
+|  876 | Irene  | history        | NY    |
+|  765 | Jay    | history        | NY    |
+|  654 | Amy    | history        | NY    |
+|  543 | Craig  | history        | NY    |
+|  123 | Amy    | psychology     | NY    |
+|  234 | Bob    | psychology     | NY    |
+|  345 | Craig  | psychology     | NY    |
+|  456 | Doris  | psychology     | NY    |
+|  567 | Edward | psychology     | NY    |
+|  678 | Fay    | psychology     | NY    |
+|  789 | Gary   | psychology     | NY    |
+|  987 | Helen  | psychology     | NY    |
+|  876 | Irene  | psychology     | NY    |
+|  765 | Jay    | psychology     | NY    |
+|  654 | Amy    | psychology     | NY    |
+|  543 | Craig  | psychology     | NY    |
+|  123 | Amy    | marine biology | NY    |
+|  234 | Bob    | marine biology | NY    |
+|  345 | Craig  | marine biology | NY    |
+|  456 | Doris  | marine biology | NY    |
+|  567 | Edward | marine biology | NY    |
+|  678 | Fay    | marine biology | NY    |
+|  789 | Gary   | marine biology | NY    |
+|  987 | Helen  | marine biology | NY    |
+|  876 | Irene  | marine biology | NY    |
+|  765 | Jay    | marine biology | NY    |
+|  654 | Amy    | marine biology | NY    |
+|  543 | Craig  | marine biology | NY    |
++------+--------+----------------+-------+
+84 rows in set (0.00 sec)
+
+mysql> select distinct(Student.sID) Student.sName,apply.major,college.cname from student,apply,college where college.cname='cornell';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.sName,apply.major,college.cname from student,apply,college where college.cname=' at line 1
+mysql> desc college;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cName  | varchar(10) | NO   | PRI |         |       |
+| state  | varchar(10) | YES  |     | NULL    |       |
+| enroll | int(11)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select distinct(Student.sID) Student.sName,apply.major,college.cName from Student,apply,college where college.cname='cornell';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.sName,apply.major,college.cName from Student,apply,college where college.cname=' at line 1
+mysql> select * from college;
++----------+-------+--------+
+| cName    | state | enroll |
++----------+-------+--------+
+| Berkeley | CA    |  36000 |
+| Cornell  | NY    |  21000 |
+| Harvard  | MA    |  50040 |
+| MIT      | MA    |  10000 |
+| Stanford | CA    |  15000 |
++----------+-------+--------+
+5 rows in set (0.00 sec)
+
+mysql> select distinct(Student.sID) ,Student.sName,apply.major,college.cName from Student,apply,college where college.cname='cornell';
++------+--------+----------------+---------+
+| sID  | sName  | major          | cName   |
++------+--------+----------------+---------+
+|  123 | Amy    | CS             | Cornell |
+|  234 | Bob    | CS             | Cornell |
+|  345 | Craig  | CS             | Cornell |
+|  456 | Doris  | CS             | Cornell |
+|  567 | Edward | CS             | Cornell |
+|  678 | Fay    | CS             | Cornell |
+|  789 | Gary   | CS             | Cornell |
+|  987 | Helen  | CS             | Cornell |
+|  876 | Irene  | CS             | Cornell |
+|  765 | Jay    | CS             | Cornell |
+|  654 | Amy    | CS             | Cornell |
+|  543 | Craig  | CS             | Cornell |
+|  123 | Amy    | EE             | Cornell |
+|  234 | Bob    | EE             | Cornell |
+|  345 | Craig  | EE             | Cornell |
+|  456 | Doris  | EE             | Cornell |
+|  567 | Edward | EE             | Cornell |
+|  678 | Fay    | EE             | Cornell |
+|  789 | Gary   | EE             | Cornell |
+|  987 | Helen  | EE             | Cornell |
+|  876 | Irene  | EE             | Cornell |
+|  765 | Jay    | EE             | Cornell |
+|  654 | Amy    | EE             | Cornell |
+|  543 | Craig  | EE             | Cornell |
+|  123 | Amy    | biology        | Cornell |
+|  234 | Bob    | biology        | Cornell |
+|  345 | Craig  | biology        | Cornell |
+|  456 | Doris  | biology        | Cornell |
+|  567 | Edward | biology        | Cornell |
+|  678 | Fay    | biology        | Cornell |
+|  789 | Gary   | biology        | Cornell |
+|  987 | Helen  | biology        | Cornell |
+|  876 | Irene  | biology        | Cornell |
+|  765 | Jay    | biology        | Cornell |
+|  654 | Amy    | biology        | Cornell |
+|  543 | Craig  | biology        | Cornell |
+|  123 | Amy    | bioengineering | Cornell |
+|  234 | Bob    | bioengineering | Cornell |
+|  345 | Craig  | bioengineering | Cornell |
+|  456 | Doris  | bioengineering | Cornell |
+|  567 | Edward | bioengineering | Cornell |
+|  678 | Fay    | bioengineering | Cornell |
+|  789 | Gary   | bioengineering | Cornell |
+|  987 | Helen  | bioengineering | Cornell |
+|  876 | Irene  | bioengineering | Cornell |
+|  765 | Jay    | bioengineering | Cornell |
+|  654 | Amy    | bioengineering | Cornell |
+|  543 | Craig  | bioengineering | Cornell |
+|  123 | Amy    | history        | Cornell |
+|  234 | Bob    | history        | Cornell |
+|  345 | Craig  | history        | Cornell |
+|  456 | Doris  | history        | Cornell |
+|  567 | Edward | history        | Cornell |
+|  678 | Fay    | history        | Cornell |
+|  789 | Gary   | history        | Cornell |
+|  987 | Helen  | history        | Cornell |
+|  876 | Irene  | history        | Cornell |
+|  765 | Jay    | history        | Cornell |
+|  654 | Amy    | history        | Cornell |
+|  543 | Craig  | history        | Cornell |
+|  123 | Amy    | psychology     | Cornell |
+|  234 | Bob    | psychology     | Cornell |
+|  345 | Craig  | psychology     | Cornell |
+|  456 | Doris  | psychology     | Cornell |
+|  567 | Edward | psychology     | Cornell |
+|  678 | Fay    | psychology     | Cornell |
+|  789 | Gary   | psychology     | Cornell |
+|  987 | Helen  | psychology     | Cornell |
+|  876 | Irene  | psychology     | Cornell |
+|  765 | Jay    | psychology     | Cornell |
+|  654 | Amy    | psychology     | Cornell |
+|  543 | Craig  | psychology     | Cornell |
+|  123 | Amy    | marine biology | Cornell |
+|  234 | Bob    | marine biology | Cornell |
+|  345 | Craig  | marine biology | Cornell |
+|  456 | Doris  | marine biology | Cornell |
+|  567 | Edward | marine biology | Cornell |
+|  678 | Fay    | marine biology | Cornell |
+|  789 | Gary   | marine biology | Cornell |
+|  987 | Helen  | marine biology | Cornell |
+|  876 | Irene  | marine biology | Cornell |
+|  765 | Jay    | marine biology | Cornell |
+|  654 | Amy    | marine biology | Cornell |
+|  543 | Craig  | marine biology | Cornell |
++------+--------+----------------+---------+
+84 rows in set (0.00 sec)
+
+mysql> select * from Student where not in(select * from apply);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in(select * from apply)' at line 1
+mysql> select * from Student where * not in(select * from apply);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* not in(select * from apply)' at line 1
+mysql> select * from Student where id not in (select sID from apply );
+ERROR 1054 (42S22): Unknown column 'id' in 'IN/ALL/ANY subquery'
+mysql> select * from Student where sid not in (select sID from apply );
++------+--------+------+--------+------------+
+| sID  | sName  | GPA  | sizeHS | DoB        |
++------+--------+------+--------+------------+
+|  456 | Doris  |  3.9 |   1000 | 1997-07-24 |
+|  567 | Edward |  2.9 |   2000 | 1996-12-21 |
+|  789 | Gary   |  3.4 |    800 | 1996-10-08 |
+|  654 | Amy    |  3.9 |   1000 | 1996-05-26 |
++------+--------+------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from college where college.cName not in(select cname from apply);
++---------+-------+--------+
+| cName   | state | enroll |
++---------+-------+--------+
+| Harvard | MA    |  50040 |
++---------+-------+--------+
+1 row in set (0.00 sec)
+
+mysql> select Student.sID from Student where(select count(apply.sID)=1);
+ERROR 1054 (42S22): Unknown column 'apply.sID' in 'field list'
+mysql> select apply.sID from apply where(select count(apply.sID)=1);
++-----+
+| sID |
++-----+
+| 123 |
+| 234 |
+| 987 |
+| 123 |
+| 345 |
+| 345 |
+| 345 |
+| 765 |
+| 765 |
+| 345 |
+| 543 |
+| 876 |
+| 876 |
+| 123 |
+| 123 |
+| 678 |
+| 765 |
+| 876 |
+| 987 |
++-----+
+19 rows in set (0.00 sec)
+
+mysql> select apply.sID from apply having (count(apply.sID)=1);
+Empty set (0.00 sec)
+
+mysql> select apply.sID from apply having (count(sID)=1);
+Empty set (0.00 sec)
+
+mysql> select apply.sID from apply having count(sID)=1;
+Empty set (0.00 sec)
+
+mysql> select apply.sID from apply having count(apply.sID)=1;
+Empty set (0.00 sec)
+
+mysql> select apply.sID from apply where count(apply.sID)=1;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select apply.sID from apply where (select count(apply.sID)=1);
++-----+
+| sID |
++-----+
+| 123 |
+| 234 |
+| 987 |
+| 123 |
+| 345 |
+| 345 |
+| 345 |
+| 765 |
+| 765 |
+| 345 |
+| 543 |
+| 876 |
+| 876 |
+| 123 |
+| 123 |
+| 678 |
+| 765 |
+| 876 |
+| 987 |
++-----+
+19 rows in set (0.00 sec)
+
+mysql> select apply.sID from apply having 1=count(*);
+Empty set (0.02 sec)
+
+mysql> select apply.sID from apply having 1=count(apply.sID);
+Empty set (0.00 sec)
+
+mysql> count(apply.sID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'count(apply.sID)' at line 1
+mysql> select apply.sID from apply having count(1);
++-----+
+| sID |
++-----+
+| 123 |
++-----+
+1 row in set (0.00 sec)
+
+mysql> select apply.sID from apply having count(3);
++-----+
+| sID |
++-----+
+| 123 |
++-----+
+1 row in set (0.00 sec)
+
+mysql> select apply.sID from apply having count(1+1);
++-----+
+| sID |
++-----+
+| 123 |
++-----+
+1 row in set (0.00 sec)
+
+mysql> select apply.sID from apply having count()=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')=1' at line 1
+mysql> select apply.sID from apply having count(apply.sID)=1;
+Empty set (0.00 sec)
+
+mysql> desc college;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cName  | varchar(10) | NO   | PRI |         |       |
+| state  | varchar(10) | YES  |     | NULL    |       |
+| enroll | int(11)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select Student.sName,Student.GPA,college.enroll from Student,college where college.enroll>25000;
++--------+------+--------+
+| sName  | GPA  | enroll |
++--------+------+--------+
+| Amy    |  3.9 |  36000 |
+| Amy    |  3.9 |  50040 |
+| Bob    |  3.6 |  36000 |
+| Bob    |  3.6 |  50040 |
+| Craig  |  3.5 |  36000 |
+| Craig  |  3.5 |  50040 |
+| Doris  |  3.9 |  36000 |
+| Doris  |  3.9 |  50040 |
+| Edward |  2.9 |  36000 |
+| Edward |  2.9 |  50040 |
+| Fay    |  3.8 |  36000 |
+| Fay    |  3.8 |  50040 |
+| Gary   |  3.4 |  36000 |
+| Gary   |  3.4 |  50040 |
+| Helen  |  3.7 |  36000 |
+| Helen  |  3.7 |  50040 |
+| Irene  |  3.9 |  36000 |
+| Irene  |  3.9 |  50040 |
+| Jay    |  2.9 |  36000 |
+| Jay    |  2.9 |  50040 |
+| Amy    |  3.9 |  36000 |
+| Amy    |  3.9 |  50040 |
+| Craig  |  3.4 |  36000 |
+| Craig  |  3.4 |  50040 |
++--------+------+--------+
+24 rows in set (0.00 sec)
+
+mysql> select distinct(Student.sName,Student.GPA),college.enroll from Student,college where college.enroll>25000;
+ERROR 1241 (21000): Operand should contain 1 column(s)
+mysql> select distinct(Student.sName) distinct(Student.GPA),college.enroll from Student,college where college.enroll>25000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'distinct(Student.GPA),college.enroll from Student,college where college.enroll>2' at line 1
+mysql> select distinct(Student.sName), distinct(Student.GPA),college.enroll from Student,college where college.enroll>25000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'distinct(Student.GPA),college.enroll from Student,college where college.enroll>2' at line 1
+mysql> select distinct(Student.sName), distinct(Student.GPA),college.enroll from Student,college where college.enroll>25000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'distinct(Student.GPA),college.enroll from Student,college where college.enroll>2' at line 1
+mysql> select distinct(Student.sName),Student.GPA,college.enroll from Student,college where college.enroll>25000;
++--------+------+--------+
+| sName  | GPA  | enroll |
++--------+------+--------+
+| Amy    |  3.9 |  36000 |
+| Amy    |  3.9 |  50040 |
+| Bob    |  3.6 |  36000 |
+| Bob    |  3.6 |  50040 |
+| Craig  |  3.5 |  36000 |
+| Craig  |  3.5 |  50040 |
+| Doris  |  3.9 |  36000 |
+| Doris  |  3.9 |  50040 |
+| Edward |  2.9 |  36000 |
+| Edward |  2.9 |  50040 |
+| Fay    |  3.8 |  36000 |
+| Fay    |  3.8 |  50040 |
+| Gary   |  3.4 |  36000 |
+| Gary   |  3.4 |  50040 |
+| Helen  |  3.7 |  36000 |
+| Helen  |  3.7 |  50040 |
+| Irene  |  3.9 |  36000 |
+| Irene  |  3.9 |  50040 |
+| Jay    |  2.9 |  36000 |
+| Jay    |  2.9 |  50040 |
+| Craig  |  3.4 |  36000 |
+| Craig  |  3.4 |  50040 |
++--------+------+--------+
+22 rows in set (0.00 sec)
+
+mysql> select distinct(Student.sName),select distinct(Student.GPA),college.enroll from Student,college where college.enroll>25000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select distinct(Student.GPA),college.enroll from Student,college where college.e' at line 1
+mysql> select distinct(Student.sName),distinct(Student.GPA),college.enroll from Student,college where college.enroll>25000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'distinct(Student.GPA),college.enroll from Student,college where college.enroll>2' at line 1
+mysql> select distinct(Student.sName),Student.GPA,college.enroll from Student,college where college.enroll>25000;
++--------+------+--------+
+| sName  | GPA  | enroll |
++--------+------+--------+
+| Amy    |  3.9 |  36000 |
+| Amy    |  3.9 |  50040 |
+| Bob    |  3.6 |  36000 |
+| Bob    |  3.6 |  50040 |
+| Craig  |  3.5 |  36000 |
+| Craig  |  3.5 |  50040 |
+| Doris  |  3.9 |  36000 |
+| Doris  |  3.9 |  50040 |
+| Edward |  2.9 |  36000 |
+| Edward |  2.9 |  50040 |
+| Fay    |  3.8 |  36000 |
+| Fay    |  3.8 |  50040 |
+| Gary   |  3.4 |  36000 |
+| Gary   |  3.4 |  50040 |
+| Helen  |  3.7 |  36000 |
+| Helen  |  3.7 |  50040 |
+| Irene  |  3.9 |  36000 |
+| Irene  |  3.9 |  50040 |
+| Jay    |  2.9 |  36000 |
+| Jay    |  2.9 |  50040 |
+| Craig  |  3.4 |  36000 |
+| Craig  |  3.4 |  50040 |
++--------+------+--------+
+22 rows in set (0.00 sec)
+
+mysql> select Student.sID,Student.GPA from student where Student.GPA=Student.GPA;
++------+------+
+| sID  | GPA  |
++------+------+
+|  123 |  3.9 |
+|  234 |  3.6 |
+|  345 |  3.5 |
+|  456 |  3.9 |
+|  567 |  2.9 |
+|  678 |  3.8 |
+|  789 |  3.4 |
+|  987 |  3.7 |
+|  876 |  3.9 |
+|  765 |  2.9 |
+|  654 |  3.9 |
+|  543 |  3.4 |
++------+------+
+12 rows in set (0.00 sec)
+
+mysql> select Student.sID,Student.GPA from student where Student.GPA=Student.GPA[1];
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[1]' at line 1
+mysql> select Student.sName,Student.sID apply.cName college.state from Student,apply,college where college.cName='Harvard' ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.cName college.state from Student,apply,college where college.cName='Harvard'' at line 1
+mysql> select Student.sName,Student.sID apply.cName,college.state from Student,apply,college where college.cName='Harvard' ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.cName,college.state from Student,apply,college where college.cName='Harvard'' at line 1
+mysql> desc college;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| cName  | varchar(10) | NO   | PRI |         |       |
+| state  | varchar(10) | YES  |     | NULL    |       |
+| enroll | int(11)     | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select Student.sName,Student.sID,apply.cName,college.state from Student,apply,college where college.cName='Harvard' ;
++--------+------+----------+-------+
+| sName  | sID  | cName    | state |
++--------+------+----------+-------+
+| Amy    |  123 | Berkeley | MA    |
+| Bob    |  234 | Berkeley | MA    |
+| Craig  |  345 | Berkeley | MA    |
+| Doris  |  456 | Berkeley | MA    |
+| Edward |  567 | Berkeley | MA    |
+| Fay    |  678 | Berkeley | MA    |
+| Gary   |  789 | Berkeley | MA    |
+| Helen  |  987 | Berkeley | MA    |
+| Irene  |  876 | Berkeley | MA    |
+| Jay    |  765 | Berkeley | MA    |
+| Amy    |  654 | Berkeley | MA    |
+| Craig  |  543 | Berkeley | MA    |
+| Amy    |  123 | Cornell  | MA    |
+| Bob    |  234 | Cornell  | MA    |
+| Craig  |  345 | Cornell  | MA    |
+| Doris  |  456 | Cornell  | MA    |
+| Edward |  567 | Cornell  | MA    |
+| Fay    |  678 | Cornell  | MA    |
+| Gary   |  789 | Cornell  | MA    |
+| Helen  |  987 | Cornell  | MA    |
+| Irene  |  876 | Cornell  | MA    |
+| Jay    |  765 | Cornell  | MA    |
+| Amy    |  654 | Cornell  | MA    |
+| Craig  |  543 | Cornell  | MA    |
+| Amy    |  123 | Stanford | MA    |
+| Bob    |  234 | Stanford | MA    |
+| Craig  |  345 | Stanford | MA    |
+| Doris  |  456 | Stanford | MA    |
+| Edward |  567 | Stanford | MA    |
+| Fay    |  678 | Stanford | MA    |
+| Gary   |  789 | Stanford | MA    |
+| Helen  |  987 | Stanford | MA    |
+| Irene  |  876 | Stanford | MA    |
+| Jay    |  765 | Stanford | MA    |
+| Amy    |  654 | Stanford | MA    |
+| Craig  |  543 | Stanford | MA    |
+| Amy    |  123 | Stanford | MA    |
+| Bob    |  234 | Stanford | MA    |
+| Craig  |  345 | Stanford | MA    |
+| Doris  |  456 | Stanford | MA    |
+| Edward |  567 | Stanford | MA    |
+| Fay    |  678 | Stanford | MA    |
+| Gary   |  789 | Stanford | MA    |
+| Helen  |  987 | Stanford | MA    |
+| Irene  |  876 | Stanford | MA    |
+| Jay    |  765 | Stanford | MA    |
+| Amy    |  654 | Stanford | MA    |
+| Craig  |  543 | Stanford | MA    |
+| Amy    |  123 | Berkeley | MA    |
+| Bob    |  234 | Berkeley | MA    |
+| Craig  |  345 | Berkeley | MA    |
+| Doris  |  456 | Berkeley | MA    |
+| Edward |  567 | Berkeley | MA    |
+| Fay    |  678 | Berkeley | MA    |
+| Gary   |  789 | Berkeley | MA    |
+| Helen  |  987 | Berkeley | MA    |
+| Irene  |  876 | Berkeley | MA    |
+| Jay    |  765 | Berkeley | MA    |
+| Amy    |  654 | Berkeley | MA    |
+| Craig  |  543 | Berkeley | MA    |
+| Amy    |  123 | Cornell  | MA    |
+| Bob    |  234 | Cornell  | MA    |
+| Craig  |  345 | Cornell  | MA    |
+| Doris  |  456 | Cornell  | MA    |
+| Edward |  567 | Cornell  | MA    |
+| Fay    |  678 | Cornell  | MA    |
+| Gary   |  789 | Cornell  | MA    |
+| Helen  |  987 | Cornell  | MA    |
+| Irene  |  876 | Cornell  | MA    |
+| Jay    |  765 | Cornell  | MA    |
+| Amy    |  654 | Cornell  | MA    |
+| Craig  |  543 | Cornell  | MA    |
+| Amy    |  123 | Cornell  | MA    |
+| Bob    |  234 | Cornell  | MA    |
+| Craig  |  345 | Cornell  | MA    |
+| Doris  |  456 | Cornell  | MA    |
+| Edward |  567 | Cornell  | MA    |
+| Fay    |  678 | Cornell  | MA    |
+| Gary   |  789 | Cornell  | MA    |
+| Helen  |  987 | Cornell  | MA    |
+| Irene  |  876 | Cornell  | MA    |
+| Jay    |  765 | Cornell  | MA    |
+| Amy    |  654 | Cornell  | MA    |
+| Craig  |  543 | Cornell  | MA    |
+| Amy    |  123 | Cornell  | MA    |
+| Bob    |  234 | Cornell  | MA    |
+| Craig  |  345 | Cornell  | MA    |
+| Doris  |  456 | Cornell  | MA    |
+| Edward |  567 | Cornell  | MA    |
+| Fay    |  678 | Cornell  | MA    |
+| Gary   |  789 | Cornell  | MA    |
+| Helen  |  987 | Cornell  | MA    |
+| Irene  |  876 | Cornell  | MA    |
+| Jay    |  765 | Cornell  | MA    |
+| Amy    |  654 | Cornell  | MA    |
+| Craig  |  543 | Cornell  | MA    |
+| Amy    |  123 | MIT      | MA    |
+| Bob    |  234 | MIT      | MA    |
+| Craig  |  345 | MIT      | MA    |
+| Doris  |  456 | MIT      | MA    |
+| Edward |  567 | MIT      | MA    |
+| Fay    |  678 | MIT      | MA    |
+| Gary   |  789 | MIT      | MA    |
+| Helen  |  987 | MIT      | MA    |
+| Irene  |  876 | MIT      | MA    |
+| Jay    |  765 | MIT      | MA    |
+| Amy    |  654 | MIT      | MA    |
+| Craig  |  543 | MIT      | MA    |
+| Amy    |  123 | MIT      | MA    |
+| Bob    |  234 | MIT      | MA    |
+| Craig  |  345 | MIT      | MA    |
+| Doris  |  456 | MIT      | MA    |
+| Edward |  567 | MIT      | MA    |
+| Fay    |  678 | MIT      | MA    |
+| Gary   |  789 | MIT      | MA    |
+| Helen  |  987 | MIT      | MA    |
+| Irene  |  876 | MIT      | MA    |
+| Jay    |  765 | MIT      | MA    |
+| Amy    |  654 | MIT      | MA    |
+| Craig  |  543 | MIT      | MA    |
+| Amy    |  123 | Stanford | MA    |
+| Bob    |  234 | Stanford | MA    |
+| Craig  |  345 | Stanford | MA    |
+| Doris  |  456 | Stanford | MA    |
+| Edward |  567 | Stanford | MA    |
+| Fay    |  678 | Stanford | MA    |
+| Gary   |  789 | Stanford | MA    |
+| Helen  |  987 | Stanford | MA    |
+| Irene  |  876 | Stanford | MA    |
+| Jay    |  765 | Stanford | MA    |
+| Amy    |  654 | Stanford | MA    |
+| Craig  |  543 | Stanford | MA    |
+| Amy    |  123 | Cornell  | MA    |
+| Bob    |  234 | Cornell  | MA    |
+| Craig  |  345 | Cornell  | MA    |
+| Doris  |  456 | Cornell  | MA    |
+| Edward |  567 | Cornell  | MA    |
+| Fay    |  678 | Cornell  | MA    |
+| Gary   |  789 | Cornell  | MA    |
+| Helen  |  987 | Cornell  | MA    |
+| Irene  |  876 | Cornell  | MA    |
+| Jay    |  765 | Cornell  | MA    |
+| Amy    |  654 | Cornell  | MA    |
+| Craig  |  543 | Cornell  | MA    |
+| Amy    |  123 | Cornell  | MA    |
+| Bob    |  234 | Cornell  | MA    |
+| Craig  |  345 | Cornell  | MA    |
+| Doris  |  456 | Cornell  | MA    |
+| Edward |  567 | Cornell  | MA    |
+| Fay    |  678 | Cornell  | MA    |
+| Gary   |  789 | Cornell  | MA    |
+| Helen  |  987 | Cornell  | MA    |
+| Irene  |  876 | Cornell  | MA    |
+| Jay    |  765 | Cornell  | MA    |
+| Amy    |  654 | Cornell  | MA    |
+| Craig  |  543 | Cornell  | MA    |
+| Amy    |  123 | Stanford | MA    |
+| Bob    |  234 | Stanford | MA    |
+| Craig  |  345 | Stanford | MA    |
+| Doris  |  456 | Stanford | MA    |
+| Edward |  567 | Stanford | MA    |
+| Fay    |  678 | Stanford | MA    |
+| Gary   |  789 | Stanford | MA    |
+| Helen  |  987 | Stanford | MA    |
+| Irene  |  876 | Stanford | MA    |
+| Jay    |  765 | Stanford | MA    |
+| Amy    |  654 | Stanford | MA    |
+| Craig  |  543 | Stanford | MA    |
+| Amy    |  123 | MIT      | MA    |
+| Bob    |  234 | MIT      | MA    |
+| Craig  |  345 | MIT      | MA    |
+| Doris  |  456 | MIT      | MA    |
+| Edward |  567 | MIT      | MA    |
+| Fay    |  678 | MIT      | MA    |
+| Gary   |  789 | MIT      | MA    |
+| Helen  |  987 | MIT      | MA    |
+| Irene  |  876 | MIT      | MA    |
+| Jay    |  765 | MIT      | MA    |
+| Amy    |  654 | MIT      | MA    |
+| Craig  |  543 | MIT      | MA    |
+| Amy    |  123 | MIT      | MA    |
+| Bob    |  234 | MIT      | MA    |
+| Craig  |  345 | MIT      | MA    |
+| Doris  |  456 | MIT      | MA    |
+| Edward |  567 | MIT      | MA    |
+| Fay    |  678 | MIT      | MA    |
+| Gary   |  789 | MIT      | MA    |
+| Helen  |  987 | MIT      | MA    |
+| Irene  |  876 | MIT      | MA    |
+| Jay    |  765 | MIT      | MA    |
+| Amy    |  654 | MIT      | MA    |
+| Craig  |  543 | MIT      | MA    |
+| Amy    |  123 | Stanford | MA    |
+| Bob    |  234 | Stanford | MA    |
+| Craig  |  345 | Stanford | MA    |
+| Doris  |  456 | Stanford | MA    |
+| Edward |  567 | Stanford | MA    |
+| Fay    |  678 | Stanford | MA    |
+| Gary   |  789 | Stanford | MA    |
+| Helen  |  987 | Stanford | MA    |
+| Irene  |  876 | Stanford | MA    |
+| Jay    |  765 | Stanford | MA    |
+| Amy    |  654 | Stanford | MA    |
+| Craig  |  543 | Stanford | MA    |
+| Amy    |  123 | Berkeley | MA    |
+| Bob    |  234 | Berkeley | MA    |
+| Craig  |  345 | Berkeley | MA    |
+| Doris  |  456 | Berkeley | MA    |
+| Edward |  567 | Berkeley | MA    |
+| Fay    |  678 | Berkeley | MA    |
+| Gary   |  789 | Berkeley | MA    |
+| Helen  |  987 | Berkeley | MA    |
+| Irene  |  876 | Berkeley | MA    |
+| Jay    |  765 | Berkeley | MA    |
+| Amy    |  654 | Berkeley | MA    |
+| Craig  |  543 | Berkeley | MA    |
+| Amy    |  123 | Stanford | MA    |
+| Bob    |  234 | Stanford | MA    |
+| Craig  |  345 | Stanford | MA    |
+| Doris  |  456 | Stanford | MA    |
+| Edward |  567 | Stanford | MA    |
+| Fay    |  678 | Stanford | MA    |
+| Gary   |  789 | Stanford | MA    |
+| Helen  |  987 | Stanford | MA    |
+| Irene  |  876 | Stanford | MA    |
+| Jay    |  765 | Stanford | MA    |
+| Amy    |  654 | Stanford | MA    |
+| Craig  |  543 | Stanford | MA    |
++--------+------+----------+-------+
+228 rows in set (0.00 sec)
+
+mysql> select distinct(Student.sName,Student.GPA),college.enroll from Student,college where college.enroll>25000;select * from college where college.cName not in(select cname from apply);
+ERROR 1241 (21000): Operand should contain 1 column(s)
++---------+-------+--------+
+| cName   | state | enroll |
++---------+-------+--------+
+| Harvard | MA    |  50040 |
++---------+-------+--------+
+1 row in set (0.00 sec)
+
+mysql> select distinct(Student.sName,Student.GPA),college.enroll from Student,college where college.enroll>25000;select * from college,Student where college.cName not in(select cname from apply);
+ERROR 1241 (21000): Operand should contain 1 column(s)
++---------+-------+--------+------+--------+------+--------+------------+
+| cName   | state | enroll | sID  | sName  | GPA  | sizeHS | DoB        |
++---------+-------+--------+------+--------+------+--------+------------+
+| Harvard | MA    |  50040 |  123 | Amy    |  3.9 |   1000 | 1996-06-26 |
+| Harvard | MA    |  50040 |  234 | Bob    |  3.6 |   1500 | 1995-04-07 |
+| Harvard | MA    |  50040 |  345 | Craig  |  3.5 |    500 | 1995-02-04 |
+| Harvard | MA    |  50040 |  456 | Doris  |  3.9 |   1000 | 1997-07-24 |
+| Harvard | MA    |  50040 |  567 | Edward |  2.9 |   2000 | 1996-12-21 |
+| Harvard | MA    |  50040 |  678 | Fay    |  3.8 |    200 | 1996-08-27 |
+| Harvard | MA    |  50040 |  789 | Gary   |  3.4 |    800 | 1996-10-08 |
+| Harvard | MA    |  50040 |  987 | Helen  |  3.7 |    800 | 1997-03-27 |
+| Harvard | MA    |  50040 |  876 | Irene  |  3.9 |    400 | 1996-03-07 |
+| Harvard | MA    |  50040 |  765 | Jay    |  2.9 |   1500 | 1998-08-08 |
+| Harvard | MA    |  50040 |  654 | Amy    |  3.9 |   1000 | 1996-05-26 |
+| Harvard | MA    |  50040 |  543 | Craig  |  3.4 |   2000 | 1998-08-27 |
++---------+-------+--------+------+--------+------+--------+------------+
+12 rows in set (0.00 sec)
+
+mysql> select distinct(Student.sName,Student.GPA),college.enroll from Student,college where college.enroll>25000;select * from college where college.cName not in(select cname from apply);
+ERROR 1241 (21000): Operand should contain 1 column(s)
++---------+-------+--------+
+| cName   | state | enroll |
++---------+-------+--------+
+| Harvard | MA    |  50040 |
++---------+-------+--------+
+1 row in set (0.00 sec)
+
+mysql>
