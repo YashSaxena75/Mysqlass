@@ -1,0 +1,489 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.1.33-community MySQL Community Server (GPL)
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql> use yash
+Database changed
+mysql> select student.sname,student.sid from student where apply.major='CS';
+ERROR 1054 (42S22): Unknown column 'apply.major' in 'where clause'
+mysql> select student.sname,student.sid from student,apply where apply.major='CS';
++--------+------+
+| sname  | sid  |
++--------+------+
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
++--------+------+
+84 rows in set (0.00 sec)
+
+mysql> select distinct(student.sname),student.sid from student where apply.major='CS';
+ERROR 1054 (42S22): Unknown column 'apply.major' in 'where clause'
+mysql> select distinct(student.sname),student.sid from student,apply where apply.major='CS';
++--------+------+
+| sname  | sid  |
++--------+------+
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
++--------+------+
+12 rows in set (0.00 sec)
+
+mysql> select student.sname,student.sid from student join apply on apply.major='CS';
++--------+------+
+| sname  | sid  |
++--------+------+
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
++--------+------+
+84 rows in set (0.00 sec)
+
+mysql> select distinct(student.sname),student.sid from student join apply on apply.major='CS';
++--------+------+
+| sname  | sid  |
++--------+------+
+| Amy    |  123 |
+| Bob    |  234 |
+| Craig  |  345 |
+| Doris  |  456 |
+| Edward |  567 |
+| Fay    |  678 |
+| Gary   |  789 |
+| Helen  |  987 |
+| Irene  |  876 |
+| Jay    |  765 |
+| Amy    |  654 |
+| Craig  |  543 |
++--------+------+
+12 rows in set (0.00 sec)
+
+mysql> select distinct(student.sid),student.sname from student join apply on apply.major='CS';
++------+--------+
+| sid  | sname  |
++------+--------+
+|  123 | Amy    |
+|  234 | Bob    |
+|  345 | Craig  |
+|  456 | Doris  |
+|  567 | Edward |
+|  678 | Fay    |
+|  789 | Gary   |
+|  987 | Helen  |
+|  876 | Irene  |
+|  765 | Jay    |
+|  654 | Amy    |
+|  543 | Craig  |
++------+--------+
+12 rows in set (0.00 sec)
+
+mysql> select sid from apply where major='CS';
++-----+
+| sid |
++-----+
+| 123 |
+| 987 |
+| 345 |
+| 543 |
+| 123 |
+| 876 |
+| 987 |
++-----+
+7 rows in set (0.00 sec)
+
+mysql> select sname from student where sizehs=sizehs;
++--------+
+| sname  |
++--------+
+| Amy    |
+| Bob    |
+| Craig  |
+| Doris  |
+| Edward |
+| Fay    |
+| Gary   |
+| Helen  |
+| Irene  |
+| Jay    |
+| Amy    |
+| Craig  |
++--------+
+12 rows in set (0.00 sec)
+
+mysql> select sname from student where sizehs=sizehs[1];
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '[1]' at line 1
+mysql> select sname from student where sizehs=1500;
++-------+
+| sname |
++-------+
+| Bob   |
+| Jay   |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> select sname from student where sizehs=select sizehs from student where sname='jay';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select sizehs from student where sname='jay'' at line 1
+mysql> select sname from student where sizehs=(select sizehs from student where sname='jay');
++-------+
+| sname |
++-------+
+| Bob   |
+| Jay   |
++-------+
+2 rows in set (0.00 sec)
+
+mysql> select sname from student where sizehs=1500 and name not 'jay';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''jay'' at line 1
+mysql> select sname from student where sizehs=1500 and name having 'jay';
+ERROR 1054 (42S22): Unknown column 'name' in 'where clause'
+mysql> select sname from student where sizehs=1500 and sname not 'jay';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''jay'' at line 1
+mysql> select sname from student where sizehs=1500 and sname not in( 'jay'_;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '_' at line 1
+mysql> select sname from student where sizehs=1500 and sname not in( 'jay');
++-------+
+| sname |
++-------+
+| Bob   |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select sname,GPA from student where sname not in ('Irene');
++--------+------+
+| sname  | GPA  |
++--------+------+
+| Amy    |  3.9 |
+| Bob    |  3.6 |
+| Craig  |  3.5 |
+| Doris  |  3.9 |
+| Edward |  2.9 |
+| Fay    |  3.8 |
+| Gary   |  3.4 |
+| Helen  |  3.7 |
+| Jay    |  2.9 |
+| Amy    |  3.9 |
+| Craig  |  3.4 |
++--------+------+
+11 rows in set (0.00 sec)
+
+mysql> select sname,GPA from student where sname not in ('Irene') and GPA not in ('3.9');
++--------+------+
+| sname  | GPA  |
++--------+------+
+| Bob    |  3.6 |
+| Craig  |  3.5 |
+| Edward |  2.9 |
+| Fay    |  3.8 |
+| Gary   |  3.4 |
+| Helen  |  3.7 |
+| Jay    |  2.9 |
+| Craig  |  3.4 |
++--------+------+
+8 rows in set (0.00 sec)
+
+mysql> select sname,GPA from student where GPA not in (select GPA from Student where sname='Irene');
++--------+------+
+| sname  | GPA  |
++--------+------+
+| Bob    |  3.6 |
+| Craig  |  3.5 |
+| Edward |  2.9 |
+| Fay    |  3.8 |
+| Gary   |  3.4 |
+| Helen  |  3.7 |
+| Jay    |  2.9 |
+| Craig  |  3.4 |
++--------+------+
+8 rows in set (0.00 sec)
+
+mysql> select apply.cname,student.sname from apply,student where student.sname like 'j%';
++----------+-------+
+| cname    | sname |
++----------+-------+
+| Berkeley | Jay   |
+| Cornell  | Jay   |
+| Stanford | Jay   |
+| Stanford | Jay   |
+| Berkeley | Jay   |
+| Cornell  | Jay   |
+| Cornell  | Jay   |
+| Cornell  | Jay   |
+| MIT      | Jay   |
+| MIT      | Jay   |
+| Stanford | Jay   |
+| Cornell  | Jay   |
+| Cornell  | Jay   |
+| Stanford | Jay   |
+| MIT      | Jay   |
+| MIT      | Jay   |
+| Stanford | Jay   |
+| Berkeley | Jay   |
+| Stanford | Jay   |
++----------+-------+
+19 rows in set (0.00 sec)
+
+mysql> select apply.cname,student,sname in (select sname from student where sname like 'j%');
+ERROR 1109 (42S02): Unknown table 'apply' in field list
+mysql> select apply.cname,student,sname from student,apply in (select sname from student where sname like 'j%');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in (select sname from student where sname like 'j%')' at line 1
+mysql> select apply.cname,student.sname from student,apply in (select sname from student where sname like 'j%');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'in (select sname from student where sname like 'j%')' at line 1
+mysql> select apply.cname,student.sname from student,apply where Student.sname in (select sname from student where sname like 'j%');
++----------+-------+
+| cname    | sname |
++----------+-------+
+| Berkeley | Jay   |
+| Cornell  | Jay   |
+| Stanford | Jay   |
+| Stanford | Jay   |
+| Berkeley | Jay   |
+| Cornell  | Jay   |
+| Cornell  | Jay   |
+| Cornell  | Jay   |
+| MIT      | Jay   |
+| MIT      | Jay   |
+| Stanford | Jay   |
+| Cornell  | Jay   |
+| Cornell  | Jay   |
+| Stanford | Jay   |
+| MIT      | Jay   |
+| MIT      | Jay   |
+| Stanford | Jay   |
+| Berkeley | Jay   |
+| Stanford | Jay   |
++----------+-------+
+19 rows in set (0.00 sec)
+
+mysql> select major from apply where sid=(select sid from student where sname="Irene");
++----------------+
+| major          |
++----------------+
+| biology        |
+| marine biology |
+| CS             |
++----------------+
+3 rows in set (0.00 sec)
+
+mysql> select cname from student where sname = (select sname from student where sname like 'j%');
+ERROR 1054 (42S22): Unknown column 'cname' in 'field list'
+mysql> select cname from apply,student where sname = (select sname from student where sname like 'j%');
++----------+
+| cname    |
++----------+
+| Berkeley |
+| Cornell  |
+| Stanford |
+| Stanford |
+| Berkeley |
+| Cornell  |
+| Cornell  |
+| Cornell  |
+| MIT      |
+| MIT      |
+| Stanford |
+| Cornell  |
+| Cornell  |
+| Stanford |
+| MIT      |
+| MIT      |
+| Stanford |
+| Berkeley |
+| Stanford |
++----------+
+19 rows in set (0.00 sec)
+
+mysql> select cname from apply where sname = (select sname from student where sname like 'j%');
+ERROR 1054 (42S22): Unknown column 'sname' in 'where clause'
+mysql> select cname from apply where Student.sname = (select sname from student where sname like 'j%');
+ERROR 1054 (42S22): Unknown column 'Student.sname' in 'where clause'
+mysql> select sid,major from apply where sid = (select sid from student where sname="irene" );
++-----+----------------+
+| sid | major          |
++-----+----------------+
+| 876 | biology        |
+| 876 | marine biology |
+| 876 | CS             |
++-----+----------------+
+3 rows in set (0.00 sec)
+
+mysql> select sid,major from apply where major in (select major from apply where sid=select sid from student where sname="irene");
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'select sid from student where sname="irene")' at line 1
+mysql> select sid,major from apply where major in (select major from apply where sid)=(select sid from student where sname="irene");
+Empty set (0.00 sec)
+
+mysql> select sid,major from apply where major in ((select major from apply where sid)=(select sid from student where sname="irene"));
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql>
