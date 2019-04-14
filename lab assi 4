@@ -1,0 +1,551 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 2
+Server version: 5.1.33-community MySQL Community Server (GPL)
+
+Type 'help;' or '\h' for help. Type '\c' to clear the buffer.
+
+mysql> select count(*) from student;
+ERROR 1046 (3D000): No database selected
+mysql> use yash;
+Database changed
+mysql> select count(*) from student;
++----------+
+| count(*) |
++----------+
+|       12 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select avg(gpa) from student;
++----------+
+| avg(gpa) |
++----------+
+|  3.56667 |
++----------+
+1 row in set (0.01 sec)
+
+mysql> select min(gpa) from student;
++----------+
+| min(gpa) |
++----------+
+|      2.9 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select sname,min(gpa) from student;
++-------+----------+
+| sname | min(gpa) |
++-------+----------+
+| Amy   |      2.9 |
++-------+----------+
+1 row in set (0.00 sec)
+
+mysql> select max(gpa) from student;
++----------+
+| max(gpa) |
++----------+
+|      3.9 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from students where gpa>=3.7;
+ERROR 1146 (42S02): Table 'yash.students' doesn't exist
+mysql> select count(*) from student where gpa>=3.7;
++----------+
+| count(*) |
++----------+
+|        6 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select max(gpa),avg(gpa),min(gpa),sum(gpa) from student;
++----------+----------+----------+----------+
+| max(gpa) | avg(gpa) | min(gpa) | sum(gpa) |
++----------+----------+----------+----------+
+|      3.9 |  3.56667 |      2.9 |     42.8 |
++----------+----------+----------+----------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from apply;
++----------+
+| count(*) |
++----------+
+|       19 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select distinct(cname) from Apply;
++----------+
+| cname    |
++----------+
+| Berkeley |
+| Cornell  |
+| MIT      |
+| Stanford |
++----------+
+4 rows in set (0.01 sec)
+
+mysql> select distinct(major) from Apply;
++----------------+
+| major          |
++----------------+
+| CS             |
+| biology        |
+| EE             |
+| bioengineering |
+| history        |
+| psychology     |
+| marine biology |
++----------------+
+7 rows in set (0.00 sec)
+
+mysql> select count(distinct(cname)) from Apply;
++------------------------+
+| count(distinct(cname)) |
++------------------------+
+|                      4 |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(distinct(major)) from Apply;
++------------------------+
+| count(distinct(major)) |
++------------------------+
+|                      7 |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql> select count(sID) from Apply;
++------------+
+| count(sID) |
++------------+
+|         19 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(Sid) from Apply;
++------------+
+| count(Sid) |
++------------+
+|         19 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(distinct(gpa)) from student;
++--------------------+
+| avg(distinct(gpa)) |
++--------------------+
+|            3.54286 |
++--------------------+
+1 row in set (0.03 sec)
+
+mysql> select count(decision) from apply where decision ="Y";
++-----------------+
+| count(decision) |
++-----------------+
+|              11 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select count(decision) from apply;
++-----------------+
+| count(decision) |
++-----------------+
+|              19 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from students where gpa> 3.4 and sizehs>1000;
+ERROR 1146 (42S02): Table 'yash.students' doesn't exist
+mysql> select count(*) from student where gpa>  3.4 and sizehs>1000;
++----------+
+| count(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where gpa> 3.4 and sizehs>1000;
++------+-------+------+--------+------------+
+| sID  | sName | GPA  | sizeHS | DoB        |
++------+-------+------+--------+------------+
+|  234 | Bob   |  3.6 |   1500 | 1995-04-07 |
++------+-------+------+--------+------------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from apply where major="marine biology";
++----------+
+| count(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from apply where decision="N";
++----------+
+| count(*) |
++----------+
+|        8 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from apply where major=(select distinct(*)from major);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '*)from major)' at line 1
+mysql> select count(*) from apply where major=(select distinct(major)from apply);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> select count(*) from apply where major in (select distinct(major)from apply);
++----------+
+| count(*) |
++----------+
+|       19 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select * from apply where major in (select distinct(major)from apply);
++-----+----------+----------------+----------+
+| sID | cName    | major          | decision |
++-----+----------+----------------+----------+
+| 123 | Berkeley | CS             | Y        |
+| 123 | Cornell  | EE             | Y        |
+| 123 | Stanford | CS             | Y        |
+| 123 | Stanford | EE             | N        |
+| 234 | Berkeley | biology        | N        |
+| 345 | Cornell  | bioengineering | N        |
+| 345 | Cornell  | CS             | Y        |
+| 345 | Cornell  | EE             | N        |
+| 345 | MIT      | bioengineering | Y        |
+| 543 | MIT      | CS             | N        |
+| 678 | Stanford | history        | Y        |
+| 765 | Cornell  | history        | N        |
+| 765 | Cornell  | psychology     | Y        |
+| 765 | Stanford | history        | Y        |
+| 876 | MIT      | biology        | Y        |
+| 876 | MIT      | marine biology | N        |
+| 876 | Stanford | CS             | N        |
+| 987 | Berkeley | CS             | Y        |
+| 987 | Stanford | CS             | Y        |
++-----+----------+----------------+----------+
+19 rows in set (0.00 sec)
+
+mysql> select count(sid) from apply where major in (select distinct(major)from apply);
++------------+
+| count(sid) |
++------------+
+|         19 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> (select distinct(major)from apply);
++----------------+
+| major          |
++----------------+
+| CS             |
+| biology        |
+| EE             |
+| bioengineering |
+| history        |
+| psychology     |
+| marine biology |
++----------------+
+7 rows in set (0.00 sec)
+
+mysql> select count(sid) from apply where major = "CS";
++------------+
+| count(sid) |
++------------+
+|          7 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(sid) from apply where major = "EE";
++------------+
+| count(sid) |
++------------+
+|          3 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(sid) from apply where major = "biology";
++------------+
+| count(sid) |
++------------+
+|          2 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(sid) from apply where major = "bioengineering";
++------------+
+| count(sid) |
++------------+
+|          2 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(sid) from apply where major = "history";
++------------+
+| count(sid) |
++------------+
+|          3 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(sid) from apply where major = "psychology";
++------------+
+| count(sid) |
++------------+
+|          1 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(sid) from apply where major = "marine biology";
++------------+
+| count(sid) |
++------------+
+|          1 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(sid) from apply where cname="berkley";
++------------+
+| count(sid) |
++------------+
+|          0 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(sid) from apply where cname="berkeley";
++------------+
+| count(sid) |
++------------+
+|          3 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(sid) from apply where cname="cornell";
++------------+
+| count(sid) |
++------------+
+|          6 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(sid) from apply where cname="MIT";
++------------+
+| count(sid) |
++------------+
+|          4 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(sid) from apply where cname="Stanford";
++------------+
+| count(sid) |
++------------+
+|          6 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select cname,major from apply where sid in(select sid from apply);
++----------+----------------+
+| cname    | major          |
++----------+----------------+
+| Berkeley | CS             |
+| Berkeley | biology        |
+| Berkeley | CS             |
+| Cornell  | EE             |
+| Cornell  | bioengineering |
+| Cornell  | CS             |
+| Cornell  | EE             |
+| Cornell  | history        |
+| Cornell  | psychology     |
+| MIT      | bioengineering |
+| MIT      | CS             |
+| MIT      | biology        |
+| MIT      | marine biology |
+| Stanford | CS             |
+| Stanford | EE             |
+| Stanford | history        |
+| Stanford | history        |
+| Stanford | CS             |
+| Stanford | CS             |
++----------+----------------+
+19 rows in set (0.00 sec)
+
+mysql> select cname,major from apply group by sid having count(ditinct(major)>2);
+ERROR 1305 (42000): FUNCTION yash.ditinct does not exist
+mysql> select cname,major from apply group by sid having count(distinct(major)>2);
++----------+----------------+
+| cname    | major          |
++----------+----------------+
+| Berkeley | CS             |
+| Berkeley | biology        |
+| Cornell  | bioengineering |
+| MIT      | CS             |
+| Stanford | history        |
+| Cornell  | history        |
+| MIT      | biology        |
+| Berkeley | CS             |
++----------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> select cname,major from apply having count(distinct(major)>2);
++----------+-------+
+| cname    | major |
++----------+-------+
+| Berkeley | CS    |
++----------+-------+
+1 row in set (0.00 sec)
+
+mysql> select cname,major from apply group by sid having count(distinct(major))>2;
++---------+----------------+
+| cname   | major          |
++---------+----------------+
+| Cornell | bioengineering |
+| MIT     | biology        |
++---------+----------------+
+2 rows in set (0.00 sec)
+
+mysql> select cname,major from apply group by sid having count(distinct(major)>=2);
++----------+----------------+
+| cname    | major          |
++----------+----------------+
+| Berkeley | CS             |
+| Berkeley | biology        |
+| Cornell  | bioengineering |
+| MIT      | CS             |
+| Stanford | history        |
+| Cornell  | history        |
+| MIT      | biology        |
+| Berkeley | CS             |
++----------+----------------+
+8 rows in set (0.00 sec)
+
+mysql> select cname,major from apply group by sid having count(distinct(major))>=2;
++----------+----------------+
+| cname    | major          |
++----------+----------------+
+| Berkeley | CS             |
+| Cornell  | bioengineering |
+| Cornell  | history        |
+| MIT      | biology        |
++----------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select cname,major from apply having count(distinct(major))>=2;
++----------+-------+
+| cname    | major |
++----------+-------+
+| Berkeley | CS    |
++----------+-------+
+1 row in set (0.00 sec)
+
+mysql> select cname,major from apply where count(distinct(major))>=2;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select cname,major from apply group by sid where count(distinct(major))>=2;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where count(distinct(major))>=2' at line 1
+mysql> select cname,major from apply group by sid having count(distinct(major))>=2;
++----------+----------------+
+| cname    | major          |
++----------+----------------+
+| Berkeley | CS             |
+| Cornell  | bioengineering |
+| Cornell  | history        |
+| MIT      | biology        |
++----------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> select sname from student where count(sname)>1;
+ERROR 1111 (HY000): Invalid use of group function
+mysql> select sname from student having count(sname)>1;
++-------+
+| sname |
++-------+
+| Amy   |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from apply where major having (select distinct(major)from apply);
+ERROR 1242 (21000): Subquery returns more than 1 row
+mysql> select count(*) from apply having major in (select distinct(major)from apply);
+ERROR 1054 (42S22): Unknown column 'major' in 'IN/ALL/ANY subquery'
+mysql> select count(*) from apply having major = (select distinct(major)from apply);
+ERROR 1054 (42S22): Unknown column 'major' in 'having clause'
+mysql> select Student.sid from student where sid not in(select sid from apply);
++------+
+| sid  |
++------+
+|  456 |
+|  567 |
+|  789 |
+|  654 |
++------+
+4 rows in set (0.00 sec)
+
+mysql> select Student.sid from student where sid in (select sid from apply)<1;
++------+
+| sid  |
++------+
+|  456 |
+|  567 |
+|  789 |
+|  654 |
++------+
+4 rows in set (0.00 sec)
+
+mysql> select Student.sid from student where sid in (select sid from apply)>3;
+Empty set (0.00 sec)
+
+mysql> select Student.sid from student where sid in (select sid from apply)<=3;
++------+
+| sid  |
++------+
+|  123 |
+|  234 |
+|  345 |
+|  456 |
+|  567 |
+|  678 |
+|  789 |
+|  987 |
+|  876 |
+|  765 |
+|  654 |
+|  543 |
++------+
+12 rows in set (0.00 sec)
+
+mysql> select apply.sid from apply where sid in (select sid from apply)>3;
+Empty set (0.00 sec)
+
+mysql> select apply.sid from apply where sid in (select sid from apply)<=3;
++-----+
+| sid |
++-----+
+| 123 |
+| 234 |
+| 987 |
+| 123 |
+| 345 |
+| 345 |
+| 345 |
+| 765 |
+| 765 |
+| 345 |
+| 543 |
+| 876 |
+| 876 |
+| 123 |
+| 123 |
+| 678 |
+| 765 |
+| 876 |
+| 987 |
++-----+
+19 rows in set (0.00 sec)
+
+mysql> select apply.sid from apply where sid in (select sid from apply)>2;
+Empty set (0.00 sec)
+
+mysql> select apply.sid from apply where sid in (select sid from apply)>1;
+Empty set (0.00 sec)
